@@ -1,0 +1,29 @@
+{
+    "name": "chris13/autoregister-classmap-plugin",
+    "description": "Plugin composer to register external source code as PSR4.",
+    "keywords": ["composer", "autoregister classmap"],
+    "type": "composer-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Christophe Chausseray",
+            "email": "chausseray.christophe@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3",
+        "composer-plugin-api": "^1.0"
+    },
+    "require-dev": {
+        "composer/composer": "~1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chris\\Composer\\AutoregisterClassmapPlugin\\": "lib/"
+        }
+    },
+    "extra": {
+        "class": "Chris\\Composer\\AutoregisterClassmapPlugin\\AutoregisterClassmapPlugin"
+    }
+}
