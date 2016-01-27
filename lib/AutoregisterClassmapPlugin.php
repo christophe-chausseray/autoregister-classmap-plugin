@@ -3,12 +3,14 @@
 namespace Chris\Composer\AutoregisterClassmapPlugin;
 
 use Chris\Composer\AutoregisterClassmapPlugin\Container\ModuleContainer;
+use Chris\Composer\AutoregisterClassmapPlugin\Parser\NamespaceParser;
 use Composer\Composer;
 use Composer\EventDispatcher\Event;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\CommandEvent;
 use Composer\Plugin\PluginInterface;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 
 class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInterface
@@ -29,6 +31,11 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
     protected $finder;
 
     /**
+     * @var NamespaceParser
+     */
+    protected $parser;
+
+    /**
      * {@inheritdoc}
      */
     public function activate(Composer $composer, IOInterface $io)
@@ -36,6 +43,7 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
         $extra                 = $composer->getPackage()->getExtra();
         $this->moduleContainer = new ModuleContainer($extra[static::COMPOSER_CONFIG_KEY_EXTRA]['path'], $extra[static::COMPOSER_CONFIG_KEY_EXTRA]['filename']);
         $this->finder          = new Finder();
+        $this->parser          = new NamespaceParser();
     }
 
     /**
@@ -53,10 +61,14 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
     /**
      * @param Event $event
      */
-    public function run(CommandEvent $event)
+    public function run(Event $event)
     {
-        $this->finder->files()->name($this->moduleContainer->getFilename())->in($this->moduleContainer->getPath());
+        $this->finder->files()->ignoreDotFiles(false)->name($this->moduleContainer->getFilename())->in($this->moduleContainer->getPath());
 
-        var_dump($this->finder);die;
+        var_dump($this->moduleContainer->getFilename(), $this->moduleContainer->getPath());
+        /** @var SplFileInfo $file */
+        foreach ($this->finder as $file) {
+            $this->parser->extractNamespace($file);
+        }
     }
 }
