@@ -16,6 +16,9 @@ class NamespaceParser
     {
         $content = Yaml::parse($file->getContents());
 
-        return $content['namespace'];
+        return array(
+            'namespace' => $content['namespace'],
+            'path'      => rtrim($file->getPathInfo()->getRealPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($content['source_dir'], DIRECTORY_SEPARATOR),
+        );
     }
 }

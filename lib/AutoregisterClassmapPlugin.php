@@ -12,6 +12,7 @@ use Composer\Plugin\CommandEvent;
 use Composer\Plugin\PluginInterface;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 
 class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -68,9 +69,8 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
 
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            $row = $this->parser->extractNamespace($file);
-            $namespace = key($row);
-            $result[$namespace] = $row[$namespace];
+            $moduleInfo = $this->parser->extractNamespace($file);
+            $result[$moduleInfo['namespace']] = $moduleInfo['path'];
         }
     }
 }
