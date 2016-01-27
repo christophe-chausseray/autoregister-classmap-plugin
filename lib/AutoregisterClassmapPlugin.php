@@ -63,12 +63,14 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
      */
     public function run(Event $event)
     {
+        $result = array();
         $this->finder->files()->ignoreDotFiles(false)->name($this->moduleContainer->getFilename())->in($this->moduleContainer->getPath());
 
-        var_dump($this->moduleContainer->getFilename(), $this->moduleContainer->getPath());
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            $this->parser->extractNamespace($file);
+            $row = $this->parser->extractNamespace($file);
+            $namespace = key($row);
+            $result[$namespace] = $row[$namespace];
         }
     }
 }

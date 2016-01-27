@@ -9,11 +9,13 @@ class NamespaceParser
 {
     /**
      * @param SplFileInfo $file
+     *
+     * @return array
      */
     public function extractNamespace(SplFileInfo $file)
     {
         $content = Yaml::parse($file->getContents());
 
-        var_dump($content);
+        return $content['namespace'];
     }
 }
