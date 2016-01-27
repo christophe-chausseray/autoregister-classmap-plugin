@@ -39,8 +39,8 @@ class AutoloadManipulator
     /**
      * Rename one autoload file into something else.
      *
-     * @param $oldName
-     * @param $newName
+     * @param string $oldName
+     * @param string $newName
      *
      * @return bool
      */
