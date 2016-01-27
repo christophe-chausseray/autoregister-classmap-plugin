@@ -3,16 +3,17 @@
 namespace Chris\Composer\AutoregisterClassmapPlugin;
 
 use Chris\Composer\AutoregisterClassmapPlugin\Container\ModuleContainer;
-use Chris\Composer\AutoregisterClassmapPlugin\Parser\NamespaceParser;
+use Chris\Composer\AutoregisterClassmapPlugin\Dumper\AutoloadDumper;
+use Chris\Composer\AutoregisterClassmapPlugin\Manipulator\AutoloadManipulator;
+use Chris\Composer\AutoregisterClassmapPlugin\Parser\RegisterFileParser;
 use Composer\Composer;
-use Composer\EventDispatcher\Event;
+use Composer\Script\Event;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
-use Composer\Plugin\CommandEvent;
 use Composer\Plugin\PluginInterface;
+use Neirda24\Bundle\ToolsBundle\Converter\ArrayToText;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Yaml\Yaml;
 
 class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInterface
 {
@@ -32,9 +33,19 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
     protected $finder;
 
     /**
-     * @var NamespaceParser
+     * @var RegisterFileParser
      */
     protected $parser;
+
+    /**
+     * @var AutoloadManipulator
+     */
+    protected $manipulator;
+
+    /**
+     * @var AutoloadDumper
+     */
+    protected $dumper;
 
     /**
      * {@inheritdoc}
@@ -44,7 +55,9 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
         $extra                 = $composer->getPackage()->getExtra();
         $this->moduleContainer = new ModuleContainer($extra[static::COMPOSER_CONFIG_KEY_EXTRA]['path'], $extra[static::COMPOSER_CONFIG_KEY_EXTRA]['filename']);
         $this->finder          = new Finder();
-        $this->parser          = new NamespaceParser();
+        $this->parser          = new RegisterFileParser();
+        $this->manipulator     = new AutoloadManipulator($composer->getConfig()->get('vendor-dir'));
+        $this->dumper          = new AutoloadDumper($composer->getConfig()->get('vendor-dir'), new ArrayToText());
     }
 
     /**
@@ -52,11 +65,20 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
      */
     public static function getSubscribedEvents()
     {
-        return [
-            'pre-autoload-dump' => [
-                ['run', 0]
-            ]
-        ];
+        return array(
+            'post-autoload-dump' => array(
+                array('moveFile', 0),
+                array('run', 0),
+            )
+        );
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function moveFile(Event $event)
+    {
+        $this->manipulator->moveAutoloadPsr4();
     }
 
     /**
@@ -69,8 +91,10 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
 
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            $moduleInfo = $this->parser->extractNamespace($file);
-            $result[$moduleInfo['namespace']] = $moduleInfo['path'];
+            $moduleInfo = $this->parser->extractRegisterInformation($file);
+            $result[$moduleInfo['namespace']] = $moduleInfo['source_dir'];
         }
+
+        $this->dumper->dumpAutoloadPsr4($result);
     }
 }
