@@ -18,11 +18,19 @@
         "neirda24/tools-bundle": "^2.0"
     },
     "require-dev": {
-        "composer/composer": "~1.0@dev"
+        "composer/composer": "~1.0@dev",
+        "symfony/phpunit-bridge": "^2.7",
+        "phpunit/phpunit": "~5.1",
+        "phake/phake": "~2.2"
     },
     "autoload": {
         "psr-4": {
             "Chris\\Composer\\AutoregisterClassmapPlugin\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "": "tests/"
         }
     },
     "extra": {
