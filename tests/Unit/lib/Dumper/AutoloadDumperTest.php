@@ -25,7 +25,7 @@ class AutoloadDumperTest extends \PHPUnit_Framework_TestCase
     const VENDOR_DIR = './vendor';
 
     /**
-     * @var ArrayToText | Phake_IMock
+     * @var ArrayToText|Phake_IMock
      */
     protected $arrayToText;
 
