@@ -10,6 +10,11 @@ use Symfony\Component\Finder\SplFileInfo;
 class RegisterFileParserTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var string PATH_TO_REGISTER_TEST
+     */
+    const PATH_TO_REGISTER_TEST = './tests/Resources/.module.test.yml';
+
+    /**
      * @var RegisterFileParser
      */
     protected $parser;
@@ -43,6 +48,6 @@ class RegisterFileParserTest extends \PHPUnit_Framework_TestCase
 
     public function getRegisterInformation()
     {
-        return file_get_contents('./tests/Resources/.module.yml');
+        return file_get_contents(self::PATH_TO_REGISTER_TEST);
     }
 }
