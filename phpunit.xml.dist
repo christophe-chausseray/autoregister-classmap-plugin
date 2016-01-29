@@ -33,6 +33,8 @@
             <file>./tests/Unit/lib/AutoregisterClassmapPluginTest.php</file>
             <file>./tests/Unit/lib/Manipulator/AutoloadManipulatorTest.php</file>
             <file>./tests/Unit/lib/Dumper/AutoloadDumperTest.php</file>
+            <file>./tests/Unit/lib/Parser/RegisterFileParserTest.php</file>
+            <file>./tests/Unit/lib/Container/ModuleContainerTest.php</file>
         </testsuite>
 
         <testsuite name="Functional">
