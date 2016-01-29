@@ -30,7 +30,9 @@
         </testsuite>
 
         <testsuite name="Unit">
-            <directory>./tests/Unit/</directory>
+            <file>./tests/Unit/lib/AutoregisterClassmapPluginTest.php</file>
+            <file>./tests/Unit/lib/Manipulator/AutoloadManipulatorTest.php</file>
+            <file>./tests/Unit/lib/Dumper/AutoloadDumperTest.php</file>
         </testsuite>
 
         <testsuite name="Functional">
