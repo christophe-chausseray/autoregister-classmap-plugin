@@ -195,7 +195,7 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function getExtraConfig()
+    protected function getExtraConfig()
     {
         return array(
             'chris-autoregister-classmap' =>
