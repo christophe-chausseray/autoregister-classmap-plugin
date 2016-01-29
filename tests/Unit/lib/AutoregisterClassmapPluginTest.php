@@ -32,7 +32,7 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     const FILENAME = '.module.yml';
 
     /**
-     * @var Composer
+     * @var Composer|Phake_IMock
      */
     protected $composer;
 
@@ -47,7 +47,7 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     protected $autoregister;
 
     /**
-     * @var RootPackage
+     * @var RootPackage|Phake_IMock
      */
     protected $package;
 
@@ -72,7 +72,7 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     protected $files;
 
     /**
-     * @var ModuleContainer
+     * @var ModuleContainer|Phake_IMock
      */
     protected $moduleContainer;
 
@@ -82,17 +82,17 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     protected $iterator;
 
     /**
-     * @var RegisterFileParser
+     * @var RegisterFileParser|Phake_IMock
      */
     protected $parser;
 
     /**
-     * @var AutoloadDumper
+     * @var AutoloadDumper|Phake_IMock
      */
     protected $dumper;
 
     /**
-     * @var AutoloadManipulator
+     * @var AutoloadManipulator|Phake_IMock
      */
     protected $manipulator;
 
@@ -121,9 +121,9 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
      */
     public function testActivatePlugin()
     {
-        \Phake::when($this->composer)->getPackage()->thenReturn($this->package);
-        \Phake::when($this->package)->getExtra()->thenReturn($this->getExtraConfig());
-        \Phake::when($this->composer)->getConfig()->thenReturn($this->config);
+        Phake::when($this->composer)->getPackage()->thenReturn($this->package);
+        Phake::when($this->package)->getExtra()->thenReturn($this->getExtraConfig());
+        Phake::when($this->composer)->getConfig()->thenReturn($this->config);
 
         $this->autoregister->activate($this->composer, $this->io);
 
