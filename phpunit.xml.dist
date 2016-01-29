@@ -26,7 +26,12 @@
 
     <testsuites>
         <testsuite name="All">
-            <directory>./tests/</directory>
+            <file>./tests/Unit/lib/AutoregisterClassmapPluginTest.php</file>
+            <file>./tests/Unit/lib/Manipulator/AutoloadManipulatorTest.php</file>
+            <file>./tests/Unit/lib/Dumper/AutoloadDumperTest.php</file>
+            <file>./tests/Unit/lib/Parser/RegisterFileParserTest.php</file>
+            <file>./tests/Unit/lib/Container/ModuleContainerTest.php</file>
+            <directory>./tests/Functional/</directory>
         </testsuite>
 
         <testsuite name="Unit">
