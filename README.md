@@ -11,11 +11,13 @@ Before downloading it you need to update your `composer.json` file with the foll
 ```json
 "extra":
     "chris-autoregister-classmap": {
-        "path" : "path/to/modules", // Directory where you store all your external source code (module)
-        "filename" : ".module.yml" // The file where you have the namespace and the source directory of your module (it can be a hidden file or not)
+        "path" : "path/to/modules",
+        "filename" : ".module.yml"
     }
 }
 ```
+Path : Directory where you store all your external source code (module)
+Filename : The file where you have the namespace and the source directory of your module (it can be a hidden file or not)
 
 Step 2: Download the Plugin
 ---------------------------
