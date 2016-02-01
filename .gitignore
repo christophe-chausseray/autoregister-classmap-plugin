@@ -40,3 +40,6 @@
 
 # Composer PHAR
 /composer.phar
+
+/tmp/
+/docs/coverage
