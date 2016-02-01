@@ -44,3 +44,5 @@ directory of your bundle.
 namespace: "App\\Module\\Bundle\\ExampleBundle\\"
 source_dir: "src/"
 ```
+
+[Example of usage](./Example.md)
