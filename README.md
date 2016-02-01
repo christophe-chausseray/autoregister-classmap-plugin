@@ -16,8 +16,10 @@ Before downloading it you need to update your `composer.json` file with the foll
     }
 }
 ```
-Path : Directory where you store all your external source code (module)
-Filename : The file where you have the namespace and the source directory of your module (it can be a hidden file or not)
+
+`Path` : Directory where you store all your external source code (module)
+
+`Filename` : The file where you have the namespace and the source directory of your module (it can be a hidden file or not)
 
 Step 2: Download the Plugin
 ---------------------------
@@ -45,4 +47,4 @@ namespace: "App\\Module\\Bundle\\ExampleBundle\\"
 source_dir: "src/"
 ```
 
-[Example of usage](./Example.md)
+[Example](./Example.md)
