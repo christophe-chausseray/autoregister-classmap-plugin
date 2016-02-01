@@ -48,3 +48,11 @@ source_dir: "src/"
 ```
 
 [Example](./Example.md)
+
+Tests
+=====
+
+Run Test in the plugin :
+```sh
+$ phpunit --debug --testsuite All
+```
