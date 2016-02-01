@@ -5,9 +5,10 @@ namespace Unit\lib\Manipulator;
 use Chris\Composer\AutoregisterClassmapPlugin\Parser\RegisterFileParser;
 use Phake;
 use Phake_IMock;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Finder\SplFileInfo;
 
-class RegisterFileParserTest extends \PHPUnit_Framework_TestCase
+class RegisterFileParserTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string PATH_TO_REGISTER_TEST
@@ -48,6 +49,6 @@ class RegisterFileParserTest extends \PHPUnit_Framework_TestCase
 
     public function getRegisterInformation()
     {
-        return file_get_contents(self::PATH_TO_REGISTER_TEST);
+        return file_get_contents(static::PATH_TO_REGISTER_TEST);
     }
 }

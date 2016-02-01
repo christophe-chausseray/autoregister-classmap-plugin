@@ -15,11 +15,12 @@ use Composer\Package\RootPackage;
 use Composer\Script\Event;
 use Phake;
 use Phake_IMock;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Utils\Accessible;
 
-class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
+class AutoregisterClassmapPluginTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string MODULES_PATH
@@ -177,8 +178,8 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->finder)->name(Phake::anyParameters())->thenReturn($this->finder);
         $this->iterator->append($this->files);
         Phake::when($this->finder)->getIterator()->thenReturn($this->iterator);
-        Phake::when($this->moduleContainer)->getFilename()->thenReturn(self::FILENAME);
-        Phake::when($this->moduleContainer)->getPath()->thenReturn(self::MODULES_PATH);
+        Phake::when($this->moduleContainer)->getFilename()->thenReturn(static::FILENAME);
+        Phake::when($this->moduleContainer)->getPath()->thenReturn(static::MODULES_PATH);
 
         $this->autoregister->run($this->event);
 
@@ -200,8 +201,8 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
         return array(
             'chris-autoregister-classmap' =>
                 array(
-                    'path' => self::MODULES_PATH,
-                    'filename' => self::FILENAME,
+                    'path'     => static::MODULES_PATH,
+                    'filename' => static::FILENAME,
                 )
         );
     }

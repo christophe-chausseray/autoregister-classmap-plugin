@@ -3,8 +3,9 @@
 namespace Unit\lib\ModuleContainer;
 
 use Chris\Composer\AutoregisterClassmapPlugin\Container\ModuleContainer;
+use PHPUnit_Framework_TestCase;
 
-class ModuleContainerTest extends \PHPUnit_Framework_TestCase
+class ModuleContainerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string PATH_MODULES
@@ -26,7 +27,7 @@ class ModuleContainerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->moduleContainer = new ModuleContainer(self::PATH_MODULES, self::REGISTER_FILENAME);
+        $this->moduleContainer = new ModuleContainer(static::PATH_MODULES, static::REGISTER_FILENAME);
     }
 
     /**

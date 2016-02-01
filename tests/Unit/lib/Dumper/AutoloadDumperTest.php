@@ -6,8 +6,9 @@ use Chris\Composer\AutoregisterClassmapPlugin\Dumper\AutoloadDumper;
 use Neirda24\Bundle\ToolsBundle\Converter\ArrayToText;
 use Phake;
 use Phake_IMock;
+use PHPUnit_Framework_TestCase;
 
-class AutoloadDumperTest extends \PHPUnit_Framework_TestCase
+class AutoloadDumperTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var string PATH_AUTOLOAD_PSR4
@@ -40,7 +41,7 @@ class AutoloadDumperTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->arrayToText = Phake::mock(ArrayToText::class);
-        $this->dumper      = new AutoloadDumper(self::VENDOR_DIR, $this->arrayToText);
+        $this->dumper      = new AutoloadDumper(static::VENDOR_DIR, $this->arrayToText);
     }
 
     /**
@@ -54,8 +55,8 @@ class AutoloadDumperTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($this->arrayToText)->arrayToString(Phake::anyParameters());
 
-        unlink(self::PATH_AUTOLOAD_PSR4);
+        unlink(static::PATH_AUTOLOAD_PSR4);
 
-        rename(self::PATH_AUTOLOAD_PSR4_CHILD, self::PATH_AUTOLOAD_PSR4);
+        rename(static::PATH_AUTOLOAD_PSR4_CHILD, static::PATH_AUTOLOAD_PSR4);
     }
 }

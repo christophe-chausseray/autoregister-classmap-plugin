@@ -10,21 +10,22 @@ use Composer\Package\RootPackage;
 use Composer\Script\Event;
 use Phake;
 use Phake_IMock;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
+class AutoregisterClassmapPluginTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var string MODULES_PATH
+     * @var string Path to modules directory MODULES_PATH
      */
     const MODULES_PATH = './tests/';
 
     /**
-     * @var string FILENAME
+     * @var string File to register the namespace AUTOREGISTER_FILENAME
      */
-    const FILENAME   = '.module.test.yml';
+    const AUTOREGISTER_FILENAME = '.module.test.yml';
 
     /**
      * @var string VENDOR_DIR
@@ -32,19 +33,24 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
     const VENDOR_DIR = './tmp';
 
     /**
-     * @var string AUTOLOAD_FIXTURE_PATH
+     * @var string Path to the autoload that will be copied AUTOLOAD_FIXTURE_PATH
      */
     const AUTOLOAD_FIXTURE_PATH = 'Resources/composer/autoload_psr4.php';
 
     /**
-     * @var string AUTOLOAD_GENERATED_DIR
+     * @var string Path where the autoload generated will be storage AUTOLOAD_GENERATED_DIR
      */
     const AUTOLOAD_GENERATED_DIR = './tmp/composer/';
 
     /**
-     * @var string AUTOLOAD_FILENAME
+     * @var string The name of composer autoload file COMPOSER_AUTOLOAD_FILENAME
      */
-    const AUTOLOAD_FILENAME = 'autoload_psr4.php';
+    const COMPOSER_AUTOLOAD_FILENAME = 'autoload_psr4.php';
+
+    /**
+     * @var string The name of composer autoload file copied COMPOSER_AUTOLOAD_CHILD_FILENAME
+     */
+    const COMPOSER_AUTOLOAD_CHILD_FILENAME = 'autoload_psr4_child.php';
 
     /**
      * @var AutoregisterClassmapPlugin
@@ -109,7 +115,7 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->composer)->getPackage()->thenReturn($this->package);
         Phake::when($this->package)->getExtra()->thenReturn($this->getExtraConfig());
         Phake::when($this->composer)->getConfig()->thenReturn($this->config);
-        Phake::when($this->config)->get('vendor-dir')->thenReturn(self::VENDOR_DIR);
+        Phake::when($this->config)->get('vendor-dir')->thenReturn(static::VENDOR_DIR);
     }
 
     /**
@@ -147,11 +153,11 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
 
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            if ('autoload_psr4.php' === $file->getFilename()) {
+            if (static::COMPOSER_AUTOLOAD_FILENAME === $file->getFilename()) {
                 $this->assertContains('AppModule\\\\Module\\\\Bundle\\\\TestBundle\\\\', $file->getContents());
             }
 
-            if ('autoload_psr4_child.php' === $file->getFilename()) {
+            if (static::COMPOSER_AUTOLOAD_CHILD_FILENAME === $file->getFilename()) {
                 $this->assertContains('Symfony\\\\Component\\\\Yaml\\\\', $file->getContents());
             }
         }
@@ -176,8 +182,8 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
         return array(
             'chris-autoregister-classmap' =>
                 array(
-                    'path' => self::MODULES_PATH,
-                    'filename' => self::FILENAME,
+                    'path'     => static::MODULES_PATH,
+                    'filename' => static::AUTOREGISTER_FILENAME,
                 )
         );
     }
@@ -187,16 +193,16 @@ class AutoregisterClassmapPluginTest extends \PHPUnit_Framework_TestCase
      */
     protected function clean()
     {
-        if (is_dir(self::AUTOLOAD_GENERATED_DIR)) {
-            $dirHandle = opendir(self::AUTOLOAD_GENERATED_DIR);
+        if (is_dir(static::AUTOLOAD_GENERATED_DIR)) {
+            $dirHandle = opendir(static::AUTOLOAD_GENERATED_DIR);
 
             while ($file = readdir($dirHandle)) {
-                if ($file != "." && $file != "..") {
-                    unlink(self::AUTOLOAD_GENERATED_DIR . $file);
+                if ('.' !== $file && '..' !== $file) {
+                    unlink(static::AUTOLOAD_GENERATED_DIR . $file);
                 }
             }
         }
 
-        copy(self::MODULES_PATH . self::AUTOLOAD_FIXTURE_PATH, self::AUTOLOAD_GENERATED_DIR . self::AUTOLOAD_FILENAME);
+        copy(static::MODULES_PATH . static::AUTOLOAD_FIXTURE_PATH, static::AUTOLOAD_GENERATED_DIR . static::COMPOSER_AUTOLOAD_FILENAME);
     }
 }
