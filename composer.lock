@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "64c79f7e1c6db4b8b1e8cee951b45b4f",
-    "content-hash": "ef13fe6ec20f8a0a7083b2ea0db74f36",
+    "hash": "bc291162c7fabde09c3d8937ad0f208c",
+    "content-hash": "93df10f24072216f1b39b10b8f3e3514",
     "packages": [
         {
             "name": "neirda24/tools-bundle",
@@ -548,7 +548,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/cd21505c8d58499a9b4d38573881cfec49c51ffd",
+                "url": "https://api.github.com/repos/composer/composer/zipball/cff35071b68e286f68ac64908c990c15b3ac4a0d",
                 "reference": "cd21505c8d58499a9b4d38573881cfec49c51ffd",
                 "shasum": ""
             },
