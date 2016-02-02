@@ -44,7 +44,6 @@ To register your module in the main project, you need to add the plugin in requi
     "require": {
         "php": ">=5.3.9",
         "chris13/autoregister-classmap-plugin": "~1",
-        ...
     },
     "require-dev": {
         "composer/composer": "~1.0@dev"

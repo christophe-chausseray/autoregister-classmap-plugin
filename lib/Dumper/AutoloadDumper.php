@@ -38,9 +38,9 @@ class AutoloadDumper
     /**
      * Dump the file "autoload_psr4.php".
      *
-     * @param $modulesPsr4
+     * @param array $modulesPsr4
      */
-    public function dumpAutoloadPsr4($modulesPsr4)
+    public function dumpAutoloadPsr4(array $modulesPsr4)
     {
         $modules = $this->arrayToText->arrayToString($modulesPsr4, 1);
 
