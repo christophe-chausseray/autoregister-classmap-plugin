@@ -2,6 +2,7 @@
 
 namespace Chris\Composer\AutoregisterClassmapPlugin\Dumper;
 
+use Chris\Composer\AutoregisterClassmapPlugin\Parser\RegisterFileParser;
 use Neirda24\Bundle\ToolsBundle\Converter\ArrayToText;
 
 /**
@@ -59,5 +60,15 @@ $modules
 return \$result;
 EOF;
         file_put_contents($this->vendorDir . '/composer/autoload_psr4.php', $autoloadPsr4File);
+    }
+
+    /**
+     * @param RegisterFileParser $parser
+     */
+    public function dumpModulesInstalled(RegisterFileParser $parser)
+    {
+        $jsonToDump = json_encode($parser->getModuleList());
+
+        file_put_contents($this->vendorDir . '/composer/modules_installed.json', $jsonToDump);
     }
 }

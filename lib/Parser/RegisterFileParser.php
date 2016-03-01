@@ -15,6 +15,11 @@ use Symfony\Component\Yaml\Yaml;
 class RegisterFileParser
 {
     /**
+     * @var array
+     */
+    protected $moduleList = array();
+
+    /**
      * @param SplFileInfo $file
      *
      * @return array
@@ -23,9 +28,27 @@ class RegisterFileParser
     {
         $content = Yaml::parse($file->getContents());
 
-        return array(
+        $result = array(
             'namespace'  => $content['namespace'],
             'source_dir' => rtrim($file->getPathInfo()->getRealPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($content['source_dir'], DIRECTORY_SEPARATOR),
         );
+
+        $name = [];
+        preg_match('#(?P<name>[a-z]*)$#i', $file->getPath(), $name);
+        $key = $name['name'];
+
+        $this->moduleList[$key] = $result;
+
+        return $result;
+    }
+
+    /**
+     * Get ModuleList
+     *
+     * @return array
+     */
+    public function getModuleList()
+    {
+        return $this->moduleList;
     }
 }
