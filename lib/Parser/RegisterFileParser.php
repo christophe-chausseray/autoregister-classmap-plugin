@@ -33,8 +33,8 @@ class RegisterFileParser
             'source_dir' => rtrim($file->getPathInfo()->getRealPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($content['source_dir'], DIRECTORY_SEPARATOR),
         );
 
-        $name = [];
-        preg_match('#(?P<name>[a-z]*)$#i', $file->getPath(), $name);
+        $name = array();
+        preg_match('#(?P<name>[a-z\-]*)/?$#i', $file->getPath(), $name);
         $key = $name['name'];
 
         $this->moduleList[$key] = $result;
