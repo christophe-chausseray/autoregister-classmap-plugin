@@ -67,7 +67,7 @@ EOF;
      */
     public function dumpModulesInstalled(RegisterFileParser $parser)
     {
-        $jsonToDump = $parser->getModuleList();
+        $jsonToDump = json_encode($parser->getModuleList());
 
         file_put_contents($this->vendorDir . '/composer/modules_installed.json', $jsonToDump);
     }
