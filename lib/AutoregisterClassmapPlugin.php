@@ -91,10 +91,11 @@ class AutoregisterClassmapPlugin implements PluginInterface, EventSubscriberInte
 
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            $moduleInfo = $this->parser->extractRegisterInformation($file);
+            $moduleInfo                       = $this->parser->extractRegisterInformation($file);
             $result[$moduleInfo['namespace']] = $moduleInfo['source_dir'];
         }
 
         $this->dumper->dumpAutoloadPsr4($result);
+        $this->dumper->dumpModulesInstalled($this->parser);
     }
 }
