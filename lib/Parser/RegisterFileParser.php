@@ -34,7 +34,7 @@ class RegisterFileParser
         );
 
         $name = [];
-        preg_match('#(?P<name>[a-z]*)$#i', $this->getPath(), $name);
+        preg_match('#(?P<name>[a-z]*)$#i', $file->getPath(), $name);
         $key = $name['name'];
 
         $this->moduleList[$key] = $result;
